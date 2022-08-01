@@ -1,1 +1,1 @@
-# elastic_apm_php_agent_aux
+# Auxilary repo for Elastic APM PHP agent
