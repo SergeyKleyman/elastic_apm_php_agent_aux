@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  custom_error_data_not_found:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: custom_error_data_not_found
+    volumes:
+      - .:/app
