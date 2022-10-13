@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        OPBEANS_PHP_AGENT_INSTALL_LOCAL_EXTENSION_BINARY: "${OPBEANS_PHP_AGENT_INSTALL_LOCAL_EXTENSION_BINARY:-}"
+        OPBEANS_PHP_AGENT_INSTALL_PACKAGE_FROM_URL: "${OPBEANS_PHP_AGENT_INSTALL_PACKAGE_FROM_URL:-}"
+        OPBEANS_PHP_AGENT_INSTALL_RELEASE_VERSION: "${OPBEANS_PHP_AGENT_INSTALL_RELEASE_VERSION:-}"
     container_name: custom_error_data_not_found
-    volumes:
-      - .:/app
