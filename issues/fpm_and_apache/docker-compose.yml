@@ -1,0 +1,40 @@
+version: '2.1'
+
+services:
+    one_container:
+        build:
+            context: .
+            dockerfile: Dockerfile_one_container
+            args:
+                PHP_VERSION: "${PHP_VERSION:-8.1}"
+                ELASTIC_APM_PHP_AGENT_INSTALL_LOCAL_EXTENSION_BINARY: "${ELASTIC_APM_PHP_AGENT_INSTALL_LOCAL_EXTENSION_BINARY:-}"
+                ELASTIC_APM_PHP_AGENT_INSTALL_PACKAGE_FROM_URL: "${ELASTIC_APM_PHP_AGENT_INSTALL_PACKAGE_FROM_URL:-}"
+                ELASTIC_APM_PHP_AGENT_INSTALL_RELEASE_VERSION: "${ELASTIC_APM_PHP_AGENT_INSTALL_RELEASE_VERSION:-}"
+        volumes:
+            - ./:/FROM_HOST
+            - ./:/var/www/html
+        ports:
+            - "${ADDRESS_ON_HOST_TO_BIND_APP_HTTP:-127.0.0.1}:${ONE_CONTAINER_PORT_ON_HOST_TO_BIND_APP_HTTP:-8081}:80"
+
+    two_containers_frontend:
+        image: httpd
+        depends_on:
+            - two_containers_backend
+        volumes:
+            - ./apache_httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+            - ./apache_httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:ro
+        ports:
+            - "${ADDRESS_ON_HOST_TO_BIND_APP_HTTP:-127.0.0.1}:${TWO_CONTAINERS_PORT_ON_HOST_TO_BIND_APP_HTTP:-8082}:80"
+
+    two_containers_backend:
+        build:
+            context: .
+            dockerfile: Dockerfile_two_containers_backend
+            args:
+                PHP_VERSION: "${PHP_VERSION:-8.1}"
+                ELASTIC_APM_PHP_AGENT_INSTALL_LOCAL_EXTENSION_BINARY: "${ELASTIC_APM_PHP_AGENT_INSTALL_LOCAL_EXTENSION_BINARY:-}"
+                ELASTIC_APM_PHP_AGENT_INSTALL_PACKAGE_FROM_URL: "${ELASTIC_APM_PHP_AGENT_INSTALL_PACKAGE_FROM_URL:-}"
+                ELASTIC_APM_PHP_AGENT_INSTALL_RELEASE_VERSION: "${ELASTIC_APM_PHP_AGENT_INSTALL_RELEASE_VERSION:-}"
+        volumes:
+            - ./:/FROM_HOST
+            - ./:/var/www/html

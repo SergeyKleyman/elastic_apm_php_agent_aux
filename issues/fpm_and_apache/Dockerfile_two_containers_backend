@@ -1,0 +1,14 @@
+ARG PHP_VERSION=8.1
+FROM php:${PHP_VERSION}-fpm
+
+RUN apt-get -qq update \
+    && apt-get -qq -y --no-install-recommends install \
+        curl
+
+RUN mkdir -p /app
+ADD install_agent.sh /app/
+RUN chmod a+x /app/install_agent.sh
+RUN /app/install_agent.sh
+
+RUN ln -s /FROM_HOST/agent_config.ini "/usr/local/etc/php/conf.d/99_-_FROM_HOST_-_agent_config.ini"
+RUN ln -s /FROM_HOST/php_config.ini "/usr/local/etc/php/conf.d/99_-_FROM_HOST_-_php_config.ini"

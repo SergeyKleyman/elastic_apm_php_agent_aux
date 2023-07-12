@@ -1,0 +1,18 @@
+ARG PHP_VERSION=8.1
+FROM shinsenter/phpfpm-apache:php${PHP_VERSION}
+
+ENV PHP_OPEN_BASEDIR=/
+
+RUN apt-get -qq update \
+    && apt-get -qq -y --no-install-recommends install \
+        curl
+
+RUN mkdir -p /app
+ADD install_agent.sh /app/
+RUN chmod a+x /app/install_agent.sh
+RUN /app/install_agent.sh
+
+RUN ln -s /FROM_HOST/agent_config.ini "/etc/php/fpm/conf.d/99_-_FROM_HOST_-_agent_config.ini"
+RUN ln -s /FROM_HOST/php_config.ini "/etc/php/fpm/conf.d/99_-_FROM_HOST_-_php_config.ini"
+RUN ln -s /FROM_HOST/agent_config.ini "/etc/php/cli/conf.d/99_-_FROM_HOST_-_agent_config.ini"
+RUN ln -s /FROM_HOST/php_config.ini "/etc/php/cli/conf.d/99_-_FROM_HOST_-_php_config.ini"
