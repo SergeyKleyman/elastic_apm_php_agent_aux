@@ -45,7 +45,7 @@ Server: Apache/2.4.57 (Unix)
 #### CLI transaction
 Command
 ```shell
-docker exec -it fpm_and_apache_one_container_1 php /var/www/html/elastic_apm_transaction_type.php
+docker exec -it fpm_and_apache_two_containers_backend_1 php /var/www/html/elastic_apm_transaction_type.php
 ```
 Expected output
 ```
