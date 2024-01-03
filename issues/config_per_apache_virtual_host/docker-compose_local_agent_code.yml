@@ -1,0 +1,7 @@
+version: '2.1'
+
+services:
+  backend:
+    volumes:
+      - ${ELASTIC_APM_PHP_AGENT_INSTALL_LOCAL_EXTENSION_BINARY}:/Elastic_APM_PHP_agent_local_code/elastic_apm.so:ro
+      - ${ELASTIC_APM_PHP_AGENT_INSTALL_LOCAL_PHP_PART}:/Elastic_APM_PHP_agent_local_code/php_part:ro
