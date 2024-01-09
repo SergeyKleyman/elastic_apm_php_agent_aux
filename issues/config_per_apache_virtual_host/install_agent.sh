@@ -2,7 +2,7 @@
 
 set -xe
 
-ELASTIC_APM_PHP_AGENT_DEFAULT_RELEASE_VERSION_TO_INSTALL=1.10.0
+ELASTIC_APM_PHP_AGENT_DEFAULT_RELEASE_VERSION_TO_INSTALL=1.11.0
 
 install_local_code () {
     local local_agent_code_php_ini=/FROM_HOST/local_agent_code_php.ini
@@ -45,7 +45,7 @@ main () {
 
     agent_version="${ELASTIC_APM_PHP_AGENT_INSTALL_RELEASE_VERSION:-${ELASTIC_APM_PHP_AGENT_DEFAULT_RELEASE_VERSION_TO_INSTALL}}"
     echo "Installing agent using release version ${agent_version} (ELASTIC_APM_PHP_AGENT_INSTALL_RELEASE_VERSION: ${ELASTIC_APM_PHP_AGENT_INSTALL_RELEASE_VERSION})..."
-    install_local_package_from_url "https://github.com/elastic/apm-agent-php/releases/download/v${agent_version}/apm-agent-php_${agent_version}_all.deb"
+    install_local_package_from_url "https://github.com/elastic/apm-agent-php/releases/download/v${agent_version}/apm-agent-php_${agent_version}_amd64.deb"
 }
 
 main
